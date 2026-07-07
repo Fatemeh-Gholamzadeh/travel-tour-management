@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.vite/
+travel_tour.db
+*.pyc
+__pycache__/
+.env
+.env.local
+.DS_Store
+backend/__pycache__/
+backend/*.pyc
+backend/travel_tour.db
+frontend/dist/
+frontend/.vite/
+
