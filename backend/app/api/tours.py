@@ -36,7 +36,7 @@ class TourResponse(TourBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 def get_current_user(token: str, db: Session):
@@ -64,7 +64,7 @@ async def get_all_tours(
     limit: int = Query(20, ge=1, le=100),
     is_active: Optional[bool] = None,
     destination: Optional[str] = None,
-    sort: str = Query("id", regex="^(id|name|price|destination)$"),
+    sort: str = Query("id", pattern="^(id|name|price|destination)$"),  
     db: Session = Depends(get_db),
 ):
     
@@ -96,11 +96,11 @@ async def get_all_tours(
     tours = query.offset(skip).limit(limit).all()
 
     return {
-        "tours": [TourResponse.from_orm(t) for t in tours],
+        "tours": [TourResponse.model_validate(t) for t in tours],  
         "total": total,
         "page": page,
         "limit": limit,
-        "total_pages": total_pages,  
+        "total_pages": total_pages, 
     }
 
 
