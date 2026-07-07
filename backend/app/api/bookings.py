@@ -31,7 +31,7 @@ class BookingResponse(BaseModel):
     special_requests: str = ""
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 def get_current_user(token: str, db: Session):

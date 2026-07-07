@@ -22,10 +22,10 @@ class UserLogin(BaseModel):
 class UserResponse(UserBase):
     id: int
     is_admin: bool
-    created_at: str  
+    created_at: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
     @validator('created_at', pre=True, allow_reuse=True)
     def convert_created_at(cls, v):
