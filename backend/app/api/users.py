@@ -20,7 +20,7 @@ class UserProfileResponse(BaseModel):
     created_at: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True 
 
     @validator('created_at', pre=True, allow_reuse=True)
     def convert_created_at(cls, v):
@@ -53,7 +53,7 @@ def get_current_user_from_token(token: str, db: Session):
 @router.get("/me", response_model=UserProfileResponse)
 async def get_my_profile(token: str, db: Session = Depends(get_db)):
     user = get_current_user_from_token(token, db)
-    return user
+    return UserProfileResponse.model_validate(user)
 
 
 @router.put("/me", response_model=UserProfileResponse)
@@ -85,7 +85,7 @@ async def update_my_profile(
 
     db.commit()
     db.refresh(user)
-    return user
+    return UserProfileResponse.model_validate(user)
 
 
 @router.get("/", response_model=List[UserProfileResponse])
@@ -94,7 +94,7 @@ async def get_all_users(token: str, db: Session = Depends(get_db)):
     if not user.is_admin:
         raise HTTPException(status_code=403, detail="Admin access required")
     users = db.query(User).all()
-    return users
+    return [UserProfileResponse.model_validate(u) for u in users]
 
 
 @router.patch("/{user_id}/role", response_model=UserProfileResponse)
@@ -115,7 +115,7 @@ async def change_user_role(
     user.is_admin = is_admin
     db.commit()
     db.refresh(user)
-    return user
+    return UserProfileResponse.model_validate(user)
 
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)

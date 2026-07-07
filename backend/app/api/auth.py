@@ -43,7 +43,7 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
     token = create_access_token(data={"sub": new_user.username, "user_id": new_user.id})
     return TokenResponse(
         access_token=token,
-        user=UserResponse.from_orm(new_user)  
+        user=UserResponse.model_validate(new_user)
     )
 
 
@@ -68,7 +68,7 @@ async def login(credentials: UserLogin, db: Session = Depends(get_db)):
         )
 
     token = create_access_token(data={"sub": user.username, "user_id": user.id})
-    return TokenResponse(access_token=token, user=UserResponse.from_orm(user))
+    return TokenResponse(access_token=token, user=UserResponse.model_validate(user))
 
 
 @router.get("/me", response_model=UserResponse)
@@ -80,4 +80,4 @@ async def get_current_user(token: str, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return UserResponse.from_orm(user)  
+    return UserResponse.model_validate(user)

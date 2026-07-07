@@ -166,7 +166,7 @@ async def update_tour(
     if not tour:
         raise HTTPException(status_code=404, detail="Tour not found")
 
-    for key, value in tour_data.dict().items():
+    for key, value in tour_data.model_dump().items():
         setattr(tour, key, value)
 
     if tour_data.capacity < tour.available_seats:
