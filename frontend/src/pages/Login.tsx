@@ -141,17 +141,18 @@ const Login: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           <div>
             <input
               type="text"
               placeholder="Username"
+              autoComplete="off"
               className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition ${
                 errors.username && touched.username
                   ? "border-red-500"
                   : "border-gray-300"
               }`}
-              value={form.username}
+              defaultValue=""
               onChange={(e) => handleChange("username", e.target.value)}
               onBlur={() => handleBlur("username")}
             />
@@ -164,12 +165,13 @@ const Login: React.FC = () => {
             <input
               type="password"
               placeholder="Password"
+              autoComplete="new-password"
               className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition ${
                 errors.password && touched.password
                   ? "border-red-500"
                   : "border-gray-300"
               }`}
-              value={form.password}
+              defaultValue=""
               onChange={(e) => handleChange("password", e.target.value)}
               onBlur={() => handleBlur("password")}
             />

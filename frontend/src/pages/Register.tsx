@@ -168,17 +168,18 @@ const Register: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           <div>
             <input
               type="text"
               placeholder="Username *"
+              autoComplete="off"
               className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition ${
                 errors.username && touched.username
                   ? "border-red-500"
                   : "border-gray-300"
               }`}
-              value={form.username}
+              defaultValue=""
               onChange={(e) => handleChange("username", e.target.value)}
               onBlur={() => handleBlur("username")}
             />
@@ -191,12 +192,13 @@ const Register: React.FC = () => {
             <input
               type="email"
               placeholder="Email *"
+              autoComplete="off"
               className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition ${
                 errors.email && touched.email
                   ? "border-red-500"
                   : "border-gray-300"
               }`}
-              value={form.email}
+              defaultValue=""
               onChange={(e) => handleChange("email", e.target.value)}
               onBlur={() => handleBlur("email")}
             />
@@ -209,12 +211,13 @@ const Register: React.FC = () => {
             <input
               type="password"
               placeholder="Password *"
+              autoComplete="new-password"
               className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition ${
                 errors.password && touched.password
                   ? "border-red-500"
                   : "border-gray-300"
               }`}
-              value={form.password}
+              defaultValue=""
               onChange={(e) => handleChange("password", e.target.value)}
               onBlur={() => handleBlur("password")}
             />
@@ -227,12 +230,13 @@ const Register: React.FC = () => {
             <input
               type="text"
               placeholder="Full Name"
+              autoComplete="off"
               className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition ${
                 errors.full_name && touched.full_name
                   ? "border-red-500"
                   : "border-gray-300"
               }`}
-              value={form.full_name}
+              defaultValue=""
               onChange={(e) => handleChange("full_name", e.target.value)}
               onBlur={() => handleBlur("full_name")}
             />
@@ -245,7 +249,7 @@ const Register: React.FC = () => {
             type="text"
             placeholder="Phone Number"
             className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition"
-            value={form.phone}
+            defaultValue=""
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
           />
 
